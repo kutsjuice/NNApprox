@@ -8,9 +8,11 @@ u = rpars(:,end);
 approxFunc = zeros(size(XX));
 residual = 0;
 for i = 1:numel(XX)
+    buf = zeros([neuronNum,1]);
     for j = 1:neuronNum
-        approxFunc(i) = approxFunc(i) + u(j)*func(XX(i), w(j,:));
+        buf(j) = u(j)*func(XX(i), w(j,:));
     end
+    approxFunc(i) = sum(buf);
     residual = residual + (sin(XX(i)) - approxFunc(i))^2;
 end
 residual = residual + alpha * sum(pars.^2);
